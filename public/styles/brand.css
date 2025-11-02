@@ -1,0 +1,65 @@
+/* ============================
+   Famish Theme – Light (Default)
+   ============================ */
+
+:root {
+  /* Primary Brand */
+  --color-primary: #F8CBA1;
+  --color-primary-hover: #F5B986;
+  --color-on-primary: #333333;
+
+  /* Base Backgrounds */
+  --color-background: #FFFDFB;
+  --color-surface: #FFF7F1;
+
+  /* Text Colors */
+  --color-text-primary: #333333;
+  --color-text-secondary: #555555;
+
+  /* Functional Colors */
+  --color-success: #4DAA58;
+  --color-on-success: #FFFFFF;
+  --color-warning: #B23A48;
+  --color-on-warning: #FFFFFF;
+  --color-info: #5D7288;
+  --color-on-info: #FFFFFF;
+
+  /* Borders & Dividers */
+  --color-border: #E3DAD3;
+
+  /* Shadows */
+  --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.05);
+  --shadow-medium: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+  /* Typography */
+  --font-header: "Caveat", cursive;
+  --font-body: "Quicksand", "Open Sans", sans-serif;
+}
+
+/* ============================
+   Famish Theme – Dark
+   ============================ */
+
+.dark {
+  --color-primary: #F8CBA1;
+  --color-primary-hover: #FCE5CD;
+  --color-on-primary: #1C1B19;
+
+  --color-background: #1C1B19;
+  --color-surface: #2A2725;
+
+  --color-text-primary: #F7F3EE;
+  --color-text-secondary: #C7C1BA;
+
+  --color-success: #81C784;
+  --color-on-success: #1C1B19;
+  --color-warning: #E57373;
+  --color-on-warning: #1C1B19;
+  --color-info: #9BB1C3;
+  --color-on-info: #1C1B19;
+
+  --color-border: #3A3734;
+
+  --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --shadow-medium: 0 4px 16px rgba(0, 0, 0, 0.6);
+}
