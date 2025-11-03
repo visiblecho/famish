@@ -14,6 +14,7 @@
     <!-- CSS -->
     <link rel="stylesheet" href="/styles/brand.css">
     <link rel="stylesheet" href="/styles/components.css">
+    <link rel="stylesheet" href="/styles/header.css">
 
     <!-- JavaScript -->
 </head>
@@ -21,10 +22,12 @@
     <header>
         <div id="logo-and-name">
             <h1>
-                Famish
-                <% if (user) { %>
-                    - <%= user.username %>
-                <% } %>
+                <span class="highlight">
+                    Famish
+                    <% if (user) { %>
+                        - <%= user.username %>
+                    <% } %>
+                </span>
             </h1>
         </div>
         <% if (user) { %>
@@ -33,8 +36,10 @@
                 <li>Meals</li>
                 <li>Dishes</li>
                 <li>Ingredients</li>
-                <li>Family</li>
+                <li><a href="/users/<%= user._id %>">Family</a></li>
             </ul>
         </nav>
+        <% } else { %>
+            <p>Happy meals for every family member</p>
         <% } %>
     </header>

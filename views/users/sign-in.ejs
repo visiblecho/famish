@@ -1,0 +1,14 @@
+<%- include('../partials/_header.ejs') %>
+
+<main>
+    <form id="sign-in" action="/users/sign-in" method="post">
+        <label for "username">Name</label><input name="username" id="username" type="text">
+        <label for "password">Password</label><input name="password" id="password" type="password">
+        <button type="submit" class="button primary">Sign-in</button>
+    </form>
+
+    <a class="button" href="/users/sign-up">Sign-up</a>
+    <a class="button" href="/">Home</a>
+</main>
+
+<%- include('../partials/_footer.ejs') %>

@@ -1,13 +1,26 @@
 /* Class button ... */
 
-h1 {
-    font-family: var(--font-header);
-    background-color: var(--color-primary);
-    color: var(--color-text-primary);
+main {
+    max-width: 600px;
 }
 
-* {
-    font-family: var(--font-body);
-    background-color: var(--color-background);
-    color: var(--color-text-primary);
+form {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+form label, input {
+    margin-bottom: .5rem;
+}
+
+form button {
+    display: block;
+    margin-top: .5rem;
+}
+
+.highlight {
+    background-color: var(--color-primary);
 }

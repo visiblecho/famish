@@ -11,6 +11,7 @@ import 'dotenv/config'
 // * Own modules
 
 import usersRouter from './controllers/users.js'
+import mealsRouter from './controllers/meals.js'
 
 import passUserToView from './middleware/pass-user-to-view.js'
 import isSignedOut from './middleware/is-signed-out.js'
@@ -46,6 +47,10 @@ app.get('/', (req, res) => {
 })
 
 app.use('/users', usersRouter)
+
+// app.use(isSignedIn)
+
+app.use('/meals', mealsRouter)
 
 // * Connections
 
