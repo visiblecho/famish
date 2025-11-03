@@ -18,3 +18,23 @@
     <!-- JavaScript -->
 </head>
 <body>
+    <header>
+        <div id="logo-and-name">
+            <h1>
+                Famish
+                <% if (user) { %>
+                    - <%= user.username %>
+                <% } %>
+            </h1>
+        </div>
+        <% if (user) { %>
+        <nav>
+            <ul>
+                <li>Meals</li>
+                <li>Dishes</li>
+                <li>Ingredients</li>
+                <li>Family</li>
+            </ul>
+        </nav>
+        <% } %>
+    </header>
