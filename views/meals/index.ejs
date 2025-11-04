@@ -1,5 +1,15 @@
 <%- include('../partials/_header.ejs') %>
 
-<p>Happy meals for every family member</p>
+<ul>
+    <% meals.forEach(meal => { %>
+        <li>
+            <a href="/meals/<%= meal._id %>">
+                <%= meal.dish.name %> on <%= meal.date.toDateString() %>
+            </a>
+        </li>
+    <% }) %>
+</ul>
+
+<a href="/meals/new">Add</a>
 
 <%- include('../partials/_footer.ejs') %>

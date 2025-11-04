@@ -12,9 +12,10 @@ import 'dotenv/config'
 
 import usersRouter from './controllers/users.js'
 import mealsRouter from './controllers/meals.js'
+import dishesRouter from './controllers/dishes.js'
 
 import passUserToView from './middleware/pass-user-to-view.js'
-import isSignedOut from './middleware/is-signed-out.js'
+// import isSignedOut from './middleware/is-signed-out.js'
 import isSignedIn from './middleware/is-signed-in.js'
 
 // * Global variables
@@ -48,9 +49,10 @@ app.get('/', (req, res) => {
 
 app.use('/users', usersRouter)
 
-// app.use(isSignedIn)
+app.use(isSignedIn)
 
 app.use('/meals', mealsRouter)
+app.use('/dishes', dishesRouter)
 
 // * Connections
 

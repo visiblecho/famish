@@ -1,0 +1,27 @@
+<%- include('../partials/_header.ejs') %>
+
+<main>
+    <div class="title"></div>
+    <div class="datalist">
+        <form id="newDishForm" action="/dishes/" method="post">
+            <label for "name">Name</label>
+                <input name="name" id="name" type="text" placeholder="Spaghetti Carbonara" required>
+            <label for "minutes">Preparation time in minutes</label>
+                <input name="minutes" id="minutes" type="number" min="1" placeholder="20">
+            <label for "ingredients">Ingredients</label>
+                <input name="ingredients" id="ingredients" type="text" placeholder="spaghetti, egg yolks, guanciale, pecorino romano">    
+            <label for "recipe">Recipe link</label>
+                <input name="recipe" id="recipe" type="url" placeholder="http://www.italian-food.com/123">
+            
+
+        </form>
+    </div>
+    <div class="actions">
+        <button class="button primary" type="submit" form="newDishForm">Save dish</button>
+        <a href="/dishes" class="button">Discard changes</a>
+    </div>
+</main>
+
+
+
+<%- include('../partials/_footer.ejs') %>

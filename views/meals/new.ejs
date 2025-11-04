@@ -1,0 +1,43 @@
+<%- include('../partials/_header.ejs') %>
+
+<main>
+    <div class="title"></div>
+        <div class="datalist">
+            <form id="newMealForm" action="/meals/" method="post">
+                <label for "date">Date</label><input name="date" id="date" type="date">
+                <label for "timeOfDay">Time</label><select name="timeOfDay" id="timeOfDay">
+                    <option value="Breakfast">Breakfast</option>
+                    <option value="Morning Snack">Morning Snack</option>
+                    <option value="Lunch">Lunch</option>
+                    <option value="Afternoon Snack">Afternoon Snack</option>
+                    <option value="Dinner">Dinner</option>
+                    <option value="Late Snack">Late Snack</option>
+                </select>
+                <label for "dish">Dish</label><select name="dish" id="dish">
+                    <% dishes.forEach(dish => { %>
+                        <option value="<%= dish._id %>"><%= dish.name %></option>
+                    <% }) %>
+                </select>
+            </form>
+        </div>
+    <div class="actions">
+        <button class="button primary" type="submit" form="newMealForm">Save meal</button>
+        <a href="/meals" class="button">Discard changes</a>
+    </div>
+</main>
+
+<script>
+  // Limit date entry to the next seven days only
+  const dateInput = document.getElementById('date');
+  const today = new Date();
+  const nextWeek = new Date();
+  nextWeek.setDate(today.getDate() + 7);
+
+  // Format as YYYY-MM-DD for the input
+  const toISO = (d) => d.toISOString().split('T')[0];
+
+  dateInput.min = toISO(today);
+  dateInput.max = toISO(nextWeek);
+</script>
+
+<%- include('../partials/_footer.ejs') %>

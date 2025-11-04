@@ -1,0 +1,15 @@
+<%- include('../partials/_header.ejs') %>
+
+<ul>
+    <% dishes.forEach(dish => { %>
+        <li>
+            <a href="/dishes/<%= dish._id %>">
+                <%= dish.name %> by <%= dish.owner.username %>
+            </a>
+        </li>
+    <% }) %>
+</ul>
+
+<a href="/dishes/new">Add</a>
+
+<%- include('../partials/_footer.ejs') %>

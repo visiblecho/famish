@@ -12,12 +12,16 @@ const dishSchema = new mongoose.Schema({
   },
   minutes: {
     type: Number,
-    min: 0,
+    min: 1,
   },
   recipe: {
     // This should include a validator so that only proper URLs are stored
     type: String,
   },
+  ingredients: {
+    type: String,
+  },
+  /*
   ingredients: {
     type: [mongoose.Schema.ObjectId],
     ref: 'Ingredient',
@@ -26,6 +30,7 @@ const dishSchema = new mongoose.Schema({
     type: [mongoose.Schema.ObjectId],
     ref: 'User',
   },
+  */
 })
 
 const Dish = mongoose.model('Dish', dishSchema)

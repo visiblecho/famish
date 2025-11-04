@@ -11,7 +11,7 @@ const mealSchema = new mongoose.Schema({
     ref: 'Dish',
     required: true,
   },
-  day: {
+  date: {
     type: Date,
     required: true,
   },
