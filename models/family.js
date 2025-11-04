@@ -7,7 +7,8 @@ const familySchema = new mongoose.Schema({
     required: true,
   },
   address: {
-    type: String, // This could be extended to its own schema
+    // This could be extended to its own schema
+    type: String,
   },
   familycode: {
     type: mongoose.Schema.Types.UUID,
