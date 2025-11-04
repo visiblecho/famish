@@ -4,8 +4,6 @@ import bcrypt from 'bcrypt'
 import isSignedOut from '../middleware/is-signed-out.js'
 import isSignedIn from '../middleware/is-signed-in.js'
 import Family from '../models/family.js'
-import mongoose from 'mongoose'
-import session from 'express-session'
 
 const router = express.Router()
 

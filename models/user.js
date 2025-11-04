@@ -1,5 +1,4 @@
 import mongoose from 'mongoose'
-import Family from './family.js'
 
 const userSchema = new mongoose.Schema({
   email: {
