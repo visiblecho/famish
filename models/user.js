@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-// import Family from './family.js'
+import Family from './family.js'
 
 const userSchema = new mongoose.Schema({
   email: {
@@ -16,13 +16,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  /*
   family: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: Family,
+    ref: 'Family',
     required: true,
   },
-  */
 })
 
 const User = mongoose.model('User', userSchema)

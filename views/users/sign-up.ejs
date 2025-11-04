@@ -2,11 +2,11 @@
 
 <main>
     <form id="sign-up" action="/users/sign-up" method="post">
-        <label for "username">Name</label><input name="username" id="username" type="text">
-        <label for "password">Password</label><input name="password" id="password" type="password">
-        <label for "email">Email</label><input name="email" id="email" type="email">
+        <label for "username">Name</label><input name="username" id="username" type="text" required>
+        <label for "password">Password</label><input name="password" id="password" type="password" required>
+        <label for "email">Email</label><input name="email" id="email" type="email" required>
         <!-- Family code is not implemented yet -->
-        <label for "family-code">Family Code</label><input name="family-code" id="family-code" type="text" disabled>
+        <label for "familycode">Family Code</label><input name="familycode" id="familycode" type="text">
         <button type="submit" class="button primary">Sign-up</button>
     </form>
 

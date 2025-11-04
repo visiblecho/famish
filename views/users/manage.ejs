@@ -4,17 +4,32 @@
     <form id="manage-user" action="/users/<%= user._id %>?_method=PUT" method="post">
         <label for "username">Name</label><input name="username" id="username" type="text" value="<%= user.username %>">
         <label for "password">Password</label><input name="password" id="password" type="password" value="<%= user.password %>">
-        <label for "email">Email</label><input name="email" id="email" type="email" value="<%= user.email %>">
-        <!-- Family code is not implemented yet -->
-        
-        <label for "family-code">Family Code</label><p>7132 612 53c763 713</p>
-
+        <label for "email">Email</label><input name="email" id="email" type="email" value="<%= user.email %>">        
         <button type="submit" class="button primary">Save changes</button>
     </form>
+
+    <label for "familymembers">Family Members</label><ul>
+        <% memberNames.forEach(member => { %>
+            <li><%= member %></li>
+        <% }) %>
+    </ul>
+
+    <label for "familycode">Family Code</label><p id="familycode"><%= user.familycode %></p>
+    <button id="copy-to-clipboard-button" class="button">Copy Code to Clipboard</button>
 
     <a class="button" href="/">Discard changes</a>
     <a class="button" href="/users/sign-out">Sign-out</a>
     <a class="button" href="/">Delete user</a>
 </main>
+<script>
+    document.getElementById('copy-to-clipboard-button').addEventListener('click', async () => {
+        const code = document.getElementById('familycode').innerText
+        try {
+            await navigator.clipboard.writeText(code)
+        } catch (err) {
+            console.error('Failed to copy to clipboard', err)
+        }
+    });
+</script>
 
 <%- include('../partials/_footer.ejs') %>

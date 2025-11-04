@@ -3,6 +3,9 @@ import User from '../models/user.js'
 import bcrypt from 'bcrypt'
 import isSignedOut from '../middleware/is-signed-out.js'
 import isSignedIn from '../middleware/is-signed-in.js'
+import Family from '../models/family.js'
+import mongoose from 'mongoose'
+import session from 'express-session'
 
 const router = express.Router()
 
@@ -13,12 +16,13 @@ router.get('/sign-up', isSignedOut, (req, res) => res.render('users/sign-up'))
 
 // * POST /users/sign-up
 // This route expects a req.body in order to create a user in the database
-// TODO Misses family management
 router.post('/sign-up', isSignedOut, async (req, res) => {
   try {
     const username = req.body.username
     const email = req.body.email
     const password = req.body.password
+    const familycode = req.body.familycode
+    let family
 
     const usernameInDatabase = await User.findOne({ username })
     if (usernameInDatabase)
@@ -29,6 +33,18 @@ router.post('/sign-up', isSignedOut, async (req, res) => {
 
     req.body.password = bcrypt.hashSync(password, 12)
 
+    if (!familycode) {
+      // Create a new family
+      family = await Family.create({ name: 'No Name Yet' })
+      req.body.family = family._id
+    } else {
+      // Check that the family is in the database
+      family = await Family.findOne({ familycode })
+      if (!family) return res.status(400).send('Family Code unknown')
+      // Add the correct id
+      req.body.family = family._id
+    }
+
     const createdUser = await User.create(req.body)
     console.log(createdUser)
 
@@ -37,6 +53,7 @@ router.post('/sign-up', isSignedOut, async (req, res) => {
       username: createdUser.username,
       email: createdUser.email,
       family: createdUser.family,
+      familycode: family.familycode,
     }
 
     req.session.save(() => res.redirect('/'))
@@ -84,6 +101,17 @@ router.get('/sign-out', isSignedIn, (req, res) => {
 })
 
 // * GET /users/:id -- manage
-router.get('/:id', isSignedIn, (req, res) => res.render('users/manage'))
+router.get('/:id', isSignedIn, async (req, res) => {
+  try {
+    const familyMembers = await User.find({
+      family: req.session.user.family,
+    })
+    const memberNames = familyMembers.map((m) => m.username)
+    res.render('users/manage', { memberNames })
+  } catch (error) {
+    console.error(error)
+    return res.status(500).send('Something went wrong. Please try again later.')
+  }
+})
 
 export default router
