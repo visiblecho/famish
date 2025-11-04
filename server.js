@@ -15,7 +15,7 @@ import mealsRouter from './controllers/meals.js'
 import dishesRouter from './controllers/dishes.js'
 
 import passUserToView from './middleware/pass-user-to-view.js'
-// import isSignedOut from './middleware/is-signed-out.js'
+import passPathToView from './middleware/pass-path-to-view.js'
 import isSignedIn from './middleware/is-signed-in.js'
 
 // * Global variables
@@ -39,6 +39,7 @@ app.use(
 )
 
 app.use(passUserToView)
+app.use(passPathToView)
 
 // * Routes
 

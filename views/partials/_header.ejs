@@ -22,21 +22,28 @@
     <header>
         <div id="logo-and-name">
             <h1>
-                <span class="highlight">
-                    Famish
-                    <% if (user) { %>
-                        - <%= user.username %>
-                    <% } %>
-                </span>
+                Famish
+                <% if (user) { %>
+                    - <%= user.username %>
+                <% } %>
             </h1>
         </div>
+        <hr>
         <% if (user) { %>
         <nav>
             <ul>
-                <li><a href="/meals">Meals</a></li>
-                <li><a href="/dishes">Dishes</a></li>
-                <li>Ingredients</li>
-                <li><a href="/users/<%= user._id %>">Family</a></li>
+                <li class="<%= currentPath.startsWith('/meals') ? 'active' : '' %>">
+                    <a href="/meals">Meals</a>
+                </li>
+                <li class="<%= currentPath.startsWith('/dishes') ? 'active' : '' %>">
+                    <a href="/dishes">Dishes</a>
+                </li>
+                <li class="<%= currentPath.startsWith('/ingredients') ? 'active' : '' %>">
+                    <a href="/ingredients" class="disabled">Ingredients</a>
+                </li>
+                <li class="<%= currentPath.startsWith('/users') ? 'active' : '' %>">
+                    <a href="/users/<%= user._id %>">Family</a>
+                </li>
             </ul>
         </nav>
         <% } else { %>
