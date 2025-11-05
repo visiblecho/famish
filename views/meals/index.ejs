@@ -3,7 +3,7 @@
 <ul>
     <% meals.forEach(meal => { %>
         <li>
-            <a href="/meals/<%= meal._id %>">
+            <a href="/meals/<%= meal._id %>/edit">
                 <%= meal.dish.name %> on <%= meal.date.toDateString() %>
             </a>
         </li>

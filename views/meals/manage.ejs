@@ -1,0 +1,56 @@
+<%- include('../partials/_header.ejs') %>
+
+<main>
+    <div class="title"></div>
+        <div class="datalist">
+            <form id="manageMealForm" action="/meals/<%= meal._id %>?_method=PUT" method="post">
+                <fieldset <%= meal.owner._id.equals(user._id) ? '' : 'disabled' %>>
+                    <label for "date">Date</label>
+                        <input name="date" id="date" type="date" value="<%= meal.date.toISOString().split('T')[0] %>">
+                    <label for "timeOfDay">Time</label>
+                        <select name="timeOfDay" id="timeOfDay">
+                            <% ['Breakfast', 'Morning Snack', 'Lunch', 'Afternoon Snack', 'Dinner', 'Late Snack'].forEach(t => { %>
+                                <option value="<%= t %>" <%= meal.timeOfDay === t ? 'selected' : '' %>>
+                                    <%= t %>
+                                </option>
+                            <% }) %>
+                        </select>
+                    <label for "dish">Dish</label>
+                        <select name="dish" id="dish">
+                            <% dishes.forEach(dish => { %>
+                                <option value="<%= dish._id %>" <%= meal.dish._id.equals(dish._id) ? 'selected' : '' %>>
+                                    <%= dish.name %>
+                                </option>
+                            <% }) %>
+                        </select>
+                </fieldset>
+            </form>
+            <label for "owner">Owner</label>
+                <p id="owner"><%= meal.owner.username %></p>
+        </div>
+    <div class="actions">
+        <% if (meal.owner.equals(user._id)) { %>
+            <button class="button primary" type="submit" form="manageMealForm">Save changes</button>
+            <form action="/meals/<%= meal._id %>?_method=DELETE" method="POST">
+                <button type="submit" class="button">Delete meal</button>
+            </form>
+        <% } %>
+        <a href="/meals" class="button">Return to overview</a>
+    </div>
+</main>
+
+<script>
+  // Limit date entry to the next seven days only
+  const dateInput = document.getElementById('date');
+  const today = new Date();
+  const nextWeek = new Date();
+  nextWeek.setDate(today.getDate() + 7);
+
+  // Format as YYYY-MM-DD for the input
+  const toISO = (d) => d.toISOString().split('T')[0];
+
+  dateInput.min = toISO(today);
+  dateInput.max = toISO(nextWeek);
+</script>
+
+<%- include('../partials/_footer.ejs') %>

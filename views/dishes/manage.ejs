@@ -4,23 +4,28 @@
     <div class="title"></div>
     <div class="datalist">
         <form id="manageDishForm" action="/dishes/<%= dish._id %>?_method=PUT" method="post">
-            <label for "name">Name</label>
-                <input name="name" id="name" type="text" value="<%= dish.name %>">
-            <label for "minutes">Preparation time in minutes</label>
-                <input name="minutes" id="minutes" type="number" min="1" value="<%= dish.minutes %>">
-            <label for "ingredients">Ingredients</label>
-                <input name="ingredients" id="ingredients" type="text" value="<%= dish.ingredients %>">
-            <label for "recipe">Recipe link</label>
-                <input name="recipe" id="recipe" type="url" value="<%= dish.recipe %>">
+            <fieldset <%= dish.owner._id.equals(user._id) ? '' : 'disabled' %>>
+                <label for "name">Name</label>
+                    <input name="name" id="name" type="text" value="<%= dish.name %>">
+                <label for "minutes">Preparation time in minutes</label>
+                    <input name="minutes" id="minutes" type="number" min="1" value="<%= dish.minutes %>">
+                <label for "ingredients">Ingredients</label>
+                    <input name="ingredients" id="ingredients" type="text" value="<%= dish.ingredients %>">
+                <label for "recipe">Recipe link</label>
+                    <input name="recipe" id="recipe" type="url" value="<%= dish.recipe %>">
+            </fieldset>
         </form>
+        <label for "owner">Owner</label>
+            <p id="owner"><%= dish.owner.username %></p>
     </div>
     <div class="actions">
-        <button class="button primary" type="submit" form="manageDishForm">Save changes</button>
-        <a href="/dishes" class="button">Discard changes</a>
-        <form action="/dishes/<%= dish._id %>?_method=DELETE" method="POST">
-            <button type="submit" class="button">Delete dish</button>
-        </form>
-
+        <% if (dish.owner.equals(user._id)) { %>
+            <button class="button primary" type="submit" form="manageDishForm">Save changes</button>
+            <form action="/dishes/<%= dish._id %>?_method=DELETE" method="POST">
+                <button type="submit" class="button">Delete dish</button>
+            </form>
+        <% } %>
+        <a href="/dishes" class="button">Return to overview</a>
     </div>
 </main>
 

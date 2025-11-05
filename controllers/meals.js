@@ -95,14 +95,43 @@ router.post('/', isSignedIn, async (req, res) => {
 })
 
 // * Edit GET /:id/edit
-router.get('/:id', isSignedIn, (req, res) => res.render('meals/manage'))
+router.get('/:id/edit', isSignedIn, async (req, res) => {
+  try {
+    const familyId = req.session.user.family
+
+    // Get dishes from the database
+    const familyDishes = await Dish.find().populate({
+      path: 'owner',
+      match: { family: familyId }, // only where owner.family matches user.familyID
+    })
+
+    // Remove dishes where owner is null (because match didn't pass)
+    const filteredDishes = familyDishes.filter((dish) => dish.owner)
+
+    // Get meal from the database
+    const meal = await Meal.findById(req.params.id).populate(['owner', 'dish'])
+
+    // Render editor
+    res.render('meals/manage', { dishes: filteredDishes, meal })
+  } catch (error) {
+    console.error(error)
+    req.session.message = {
+      class: 'warning',
+      text: `Error editing meal:<br>${error.message}`,
+    }
+    res.redirect('/meals')
+  }
+})
 
 // * Update PUT /:id
-router.put('/:id', isSignedIn, (req, res) => {
+router.put('/:id', isSignedIn, async (req, res) => {
   try {
+    // Update database entry
+    await Meal.findByIdAndUpdate(req.params.id, req.body)
+
     // Schedule a success message and redirect to the index page
     req.session.message = { class: 'success', text: `Meal updated` }
-    res.send('Put', req.body)
+    res.redirect('/meals')
   } catch (error) {
     console.error(error)
     req.session.message = {
@@ -114,11 +143,14 @@ router.put('/:id', isSignedIn, (req, res) => {
 })
 
 // * Delete DELETE /:id
-router.delete('/:id', isSignedIn, (req, res) => {
+router.delete('/:id', isSignedIn, async (req, res) => {
   try {
+    // Delete dish in database
+    await Meal.findByIdAndDelete(req.params.id)
+
     // Schedule a success message and redirect to the index page
     req.session.message = { class: 'success', text: `Meal removed` }
-    res.send('Delete', req.body)
+    res.redirect('/meals')
   } catch (error) {
     console.error(error)
     req.session.message = {

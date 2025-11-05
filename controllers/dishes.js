@@ -58,7 +58,7 @@ router.post('/', isSignedIn, async (req, res) => {
 // * Edit GET /:id/edit
 router.get('/:id/edit', isSignedIn, async (req, res) => {
   try {
-    const dish = await Dish.findById(req.params.id)
+    const dish = await Dish.findById(req.params.id).populate('owner')
     res.render('dishes/manage', { dish })
   } catch (error) {
     console.error(error)
