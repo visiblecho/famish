@@ -22,7 +22,7 @@
 <body>
     <% if (message) { %>
         <section id="message" class="<%= message.class %>">
-            <p><%= message.text %></p>
+            <p><%- message.text %></p>
         </section>
     <% } %>
     <header>

@@ -45,10 +45,7 @@ app.use(passMessageToView)
 
 // * Routes
 
-app.get('/', (req, res) => {
-  if (req.session.user) res.redirect('/meals')
-  else res.render('index')
-})
+app.get('/', (req, res) => res.render('index'))
 
 app.use('/users', usersRouter)
 

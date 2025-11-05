@@ -1,7 +1,9 @@
 <%- include('partials/_header.ejs') %>
 
-<a class="button primary" href="/users/sign-up">Sign-up</a>
-<a class="button" href="/users/sign-in">Sign-in</a>
+<% if (!user) { %>
+    <a class="button primary" href="/users/sign-up">Sign-up</a>
+    <a class="button" href="/users/sign-in">Sign-in</a>
+<% } %>
 
 <ul>
     <li>Join or start a family</li>
