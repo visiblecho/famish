@@ -3,7 +3,7 @@
 <ul>
     <% dishes.forEach(dish => { %>
         <li>
-            <a href="/dishes/<%= dish._id %>">
+            <a href="/dishes/<%= dish._id %>/edit">
                 <%= dish.name %> by <%= dish.owner.username %>
             </a>
         </li>

@@ -11,15 +11,17 @@ router.get('/', isSignedIn, async (req, res) => {
     const familyId = req.session.user.family
 
     // Get meals from the database
-    const familyMeals = await Meal.find().populate([
-      {
-        path: 'owner',
-        match: { family: familyId }, // only where owner.family matches user.familyID
-      },
-      {
-        path: 'dish',
-      },
-    ])
+    const familyMeals = await Meal.find()
+      .sort({ date: 1 }) // ascending date
+      .populate([
+        {
+          path: 'owner',
+          match: { family: familyId }, // only where owner.family matches user.familyID
+        },
+        {
+          path: 'dish',
+        },
+      ])
 
     // Remove dishes where owner is null (because match didn't pass)
     const filteredMeals = familyMeals.filter((meal) => meal.owner)

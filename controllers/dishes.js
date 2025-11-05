@@ -1,6 +1,7 @@
 import express from 'express'
 import isSignedIn from '../middleware/is-signed-in.js'
 import Dish from '../models/dish.js'
+import Meal from '../models/meal.js'
 
 const router = express.Router()
 
@@ -23,7 +24,7 @@ router.get('/', isSignedIn, async (req, res) => {
     console.error(error)
     req.session.message = {
       class: 'warning',
-      text: `Error showing dishes:<br>${error.message}`,
+      text: `Error showing all dishes:<br>${error.message}`,
     }
     res.redirect('/')
   }
@@ -55,35 +56,64 @@ router.post('/', isSignedIn, async (req, res) => {
 })
 
 // * Edit GET /:id/edit
-router.get('/:id', isSignedIn, (req, res) => res.render('dishes/manage'))
-
-// * Update PUT /:id
-router.put('/:id', isSignedIn, (req, res) => {
+router.get('/:id/edit', isSignedIn, async (req, res) => {
   try {
-    // Schedule a success message and redirect to the index page
-    req.session.message = { class: 'success', text: `Meal updated` }
-    res.send('Put', req.body)
+    const dish = await Dish.findById(req.params.id)
+    res.render('dishes/manage', { dish })
   } catch (error) {
     console.error(error)
     req.session.message = {
       class: 'warning',
-      text: `Error removing meal:<br>${error.message}`,
+      text: `Error editing dish:<br>${error.message}`,
+    }
+    res.redirect('/dishes')
+  }
+})
+
+// * Update PUT /:id
+router.put('/:id', isSignedIn, async (req, res) => {
+  try {
+    // Update database entry
+    await Dish.findByIdAndUpdate(req.params.id, req.body)
+
+    // Schedule a success message and redirect to the index page
+    req.session.message = { class: 'success', text: `Meal updated` }
+    res.redirect('/dishes')
+  } catch (error) {
+    console.error(error)
+    req.session.message = {
+      class: 'warning',
+      text: `Error updating dish:<br>${error.message}`,
     }
     res.redirect('/dishes')
   }
 })
 
 // * Delete DELETE /:id
-router.delete('/:id', isSignedIn, (req, res) => {
+router.delete('/:id', isSignedIn, async (req, res) => {
   try {
+    // Validate that the dish is not referenced in a meal
+    const meal = await Meal.find({ dish: req.params.id })
+
+    if (meal.length > 0) {
+      req.session.message = {
+        class: 'info',
+        text: 'Dish in use, cannot delete',
+      }
+      return res.redirect('/dishes')
+    }
+
+    // Delete dish in database
+    await Dish.findByIdAndDelete(req.params.id)
+
     // Schedule a success message and redirect to the index page
-    req.session.message = { class: 'success', text: `Meal removed` }
-    res.send('Delete', req.body)
+    req.session.message = { class: 'success', text: `Dish removed` }
+    return res.redirect('/dishes')
   } catch (error) {
     console.error(error)
     req.session.message = {
       class: 'warning',
-      text: `Error removing meal:<br>${error.message}`,
+      text: `Error removing dish:<br>${error.message}`,
     }
     res.redirect('/dishes')
   }
