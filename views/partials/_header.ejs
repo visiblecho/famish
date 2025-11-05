@@ -15,19 +15,25 @@
     <link rel="stylesheet" href="/styles/brand.css">
     <link rel="stylesheet" href="/styles/components.css">
     <link rel="stylesheet" href="/styles/header.css">
+    <link rel="stylesheet" href="/styles/messages.css">
 
     <!-- JavaScript -->
 </head>
 <body>
+    <% if (message) { %>
+        <section id="message" class="<%= message.class %>">
+            <p><%= message.text %></p>
+        </section>
+    <% } %>
     <header>
-        <div id="logo-and-name">
+        <section id="logo-and-name">
             <h1>
                 Famish
                 <% if (user) { %>
                     - <%= user.username %>
                 <% } %>
             </h1>
-        </div>
+        </section>
         <hr>
         <% if (user) { %>
         <nav>

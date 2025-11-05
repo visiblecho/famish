@@ -25,7 +25,6 @@ router.get('/', isSignedIn, async (req, res) => {
   // Remove dishes where owner is null (because match didn't pass)
   const filteredMeals = familyMeals.filter((meal) => meal.owner)
 
-  console.log(filteredMeals)
   // TODO only pass future meals to view (perhaps already filter in .popuate())
   res.render('meals/index', { meals: filteredMeals })
 })
@@ -48,12 +47,17 @@ router.get('/new', isSignedIn, async (req, res) => {
 
 // * Create POST /
 router.post('/', isSignedIn, async (req, res) => {
-  // expects req.body to have .date, .timeOfDay and .dish
+  // Expects req.body to have .date, .timeOfDay and .dish
   req.body.owner = req.session.user._id
-  console.log(req.body)
 
+  // Create the meal in the database
   const createdMeal = await Meal.create(req.body)
-  // add success message
+
+  // Schedule a success message and redirect to the index page
+  req.session.message = {
+    class: 'success',
+    text: `Meal added`,
+  }
   res.redirect('/meals')
 })
 

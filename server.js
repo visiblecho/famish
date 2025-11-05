@@ -16,6 +16,7 @@ import dishesRouter from './controllers/dishes.js'
 
 import passUserToView from './middleware/pass-user-to-view.js'
 import passPathToView from './middleware/pass-path-to-view.js'
+import passMessageToView from './middleware/pass-message-to-view.js'
 import isSignedIn from './middleware/is-signed-in.js'
 
 // * Global variables
@@ -40,6 +41,7 @@ app.use(
 
 app.use(passUserToView)
 app.use(passPathToView)
+app.use(passMessageToView)
 
 // * Routes
 
