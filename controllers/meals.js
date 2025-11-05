@@ -50,6 +50,15 @@ router.get('/new', isSignedIn, async (req, res) => {
     // Remove dishes where owner is null (because match didn't pass)
     const filteredDishes = familyDishes.filter((dish) => dish.owner)
 
+    // If there are no dishes, redirect to creating a dish
+    if (filteredDishes.length <= 0) {
+      req.session.message = {
+        class: 'info',
+        text: `Add dishes before adding meals`,
+      }
+      return res.redirect('/dishes')
+    }
+
     res.render('meals/new', { dishes: filteredDishes })
   } catch (error) {
     console.error(error)

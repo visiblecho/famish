@@ -2,10 +2,10 @@
 
 <main>
     <form id="manage-user" action="/users/<%= user._id %>?_method=PUT" method="post">
-        <label for "username">Name</label><input name="username" id="username" type="text" value="<%= user.username %>">
-        <label for "password">Password</label><input name="password" id="password" type="password" value="<%= user.password %>">
+        <label for "familyname">Family Name</label><input name="familyname" id="familyname" type="familyname" value="<%= user.familyname %>">        
+        <label for "username">Username</label><input name="username" id="username" type="text" value="<%= user.username %>">
+        <label for "password">Password</label><input name="password" id="password" type="password" placeholder="Leave blank to keep current password">
         <label for "email">Email</label><input name="email" id="email" type="email" value="<%= user.email %>">        
-        <button type="submit" class="button primary">Save changes</button>
     </form>
 
     <label for "familymembers">Family Members</label><ul>
@@ -14,10 +14,10 @@
         <% }) %>
     </ul>
 
-    <label for "familycode">Family Code</label><p id="familycode"><%= user.familycode %></p>
+    <label for "familycode">Family Code (share to invite members)</label><p id="familycode"><%= user.familycode %></p>
     <button id="copy-to-clipboard-button" class="button">Copy Code to Clipboard</button>
 
-    <a class="button" href="/">Discard changes</a>
+    <button form="manage-user" type="submit" class="button primary">Save changes</button>
     <a class="button" href="/users/sign-out">Sign-out</a>
     <a class="button" href="/">Delete user</a>
 </main>

@@ -46,6 +46,12 @@ router.post('/sign-up', isSignedOut, async (req, res) => {
       // Create a new family
       family = await Family.create({ name: 'No Name Yet' })
       req.body.family = family._id
+
+      // Schedule success message
+      req.session.message = {
+        class: 'success',
+        text: `New user and family created`,
+      }
     } else {
       // Check that the family is in the database
       family = await Family.findOne({ familycode })
@@ -58,20 +64,31 @@ router.post('/sign-up', isSignedOut, async (req, res) => {
       }
       // Add the correct id
       req.body.family = family._id
+
+      // Schedule success message
+      req.session.message = {
+        class: 'success',
+        text: `New user joined family`,
+      }
     }
 
+    // Create user in the database.
     const createdUser = await User.create(req.body)
     console.log(createdUser)
 
+    // Update the session with user information (to signal of signed-in status).
     req.session.user = {
       _id: createdUser._id,
       username: createdUser.username,
       email: createdUser.email,
       family: createdUser.family,
+      familyname: family.name,
       familycode: family.familycode,
     }
 
-    req.session.save(() => res.redirect('/'))
+    // Schedule success message and return to home after saving the session.
+
+    req.session.save(() => res.redirect(`/users/${createdUser._id}`))
   } catch (error) {
     console.error(error)
     req.session.message = {
@@ -89,7 +106,10 @@ router.get('/sign-in', isSignedOut, (req, res) => res.render('users/sign-in'))
 // This route expects a req.body in order to search for a matching user
 router.post('/sign-in', isSignedOut, async (req, res) => {
   try {
-    const existingUser = await User.findOne({ username: req.body.username })
+    const existingUser = await User.findOne({
+      username: req.body.username,
+    }).populate('family')
+
     if (!existingUser) {
       req.session.message = {
         class: 'info',
@@ -110,7 +130,9 @@ router.post('/sign-in', isSignedOut, async (req, res) => {
       _id: existingUser._id,
       username: existingUser.username,
       email: existingUser.email,
-      family: existingUser.family,
+      family: existingUser.family._id,
+      familyname: existingUser.family.name,
+      familycode: existingUser.family.familycode,
     }
 
     req.session.save(() => res.redirect('/'))
