@@ -1,0 +1,79 @@
+main {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+main h2 {
+    font-size: 1.25rem;
+    font-weight: normal;
+}
+
+main .datalist {
+    padding:  .5rem;
+    background-color: var(--color-surface);
+    border-radius: .25rem;
+    font-size: 1rem;
+}
+
+main fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+main .display-row {
+    display: flex;
+    align-items: center;
+    margin: 0.5rem 0;
+
+}
+
+main label {
+    width: 5rem;
+    text-align: left;
+    margin-right: 1rem;
+}
+
+main label.unitOfMeasurement {
+    width: auto;
+    margin: 0 0 0 .5rem;
+    text-align: left;
+}
+
+main input, select {
+    flex: 1;
+    padding: .5rem;
+    border: 1px solid var(--color-border);
+}
+
+main p {
+    margin-block: 0;
+    padding: .5rem 0;
+}
+
+main .actions {
+    padding: 1rem 0;
+}
+
+main a {
+    text-decoration: none;
+}
+
+main .button {
+    display: inline-block;
+    font-size: 1rem;
+    color: var(--color-text-primary);
+    background-color: var(--color-background);
+    border: 1px solid var(--color-border);
+    border-radius: 100px;
+    padding: .5rem 2rem;
+    margin: .25rem;
+    width: 66%;
+    cursor: pointer;
+}
+
+main .primary {
+    background-color: var(--color-primary);
+}

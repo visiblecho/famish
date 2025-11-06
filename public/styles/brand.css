@@ -1,6 +1,6 @@
-/* ============================
-   Famish Theme – Light (Default)
-   ============================ */
+* {
+  box-sizing: border-box;
+}
 
 :root {
   /* Primary Brand */
@@ -36,10 +36,6 @@
   --font-body: "Quicksand", "Open Sans", sans-serif;
 }
 
-/* ============================
-   Famish Theme – Dark
-   ============================ */
-
 .dark {
   --color-primary: #F8CBA1;
   --color-primary-hover: #FCE5CD;
@@ -68,4 +64,6 @@ body {
   font-family: var(--font-body);
   background-color: var(--color-background);
   color: var(--color-text-primary);
+  margin: .5rem;
+  padding: .5rem;
 }

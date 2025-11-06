@@ -1,32 +1,41 @@
 <%- include('../partials/_header.ejs') %>
 
 <main>
-    <div class="title"></div>
+    <div class="title"><h2>Manage a Meal</h2></div>
         <div class="datalist">
             <form id="manageMealForm" action="/meals/<%= meal._id %>?_method=PUT" method="post">
                 <fieldset <%= meal.owner._id.equals(user._id) ? '' : 'disabled' %>>
-                    <label for "date">Date</label>
+                    <div class="display-row">
+                        <label for "date">Date</label>
                         <input name="date" id="date" type="date" value="<%= meal.date.toISOString().split('T')[0] %>">
-                    <label for "timeOfDay">Time</label>
-                        <select name="timeOfDay" id="timeOfDay">
-                            <% ['Breakfast', 'Morning Snack', 'Lunch', 'Afternoon Snack', 'Dinner', 'Late Snack'].forEach(t => { %>
-                                <option value="<%= t %>" <%= meal.timeOfDay === t ? 'selected' : '' %>>
-                                    <%= t %>
-                                </option>
-                            <% }) %>
-                        </select>
-                    <label for "dish">Dish</label>
-                        <select name="dish" id="dish">
-                            <% dishes.forEach(dish => { %>
-                                <option value="<%= dish._id %>" <%= meal.dish._id.equals(dish._id) ? 'selected' : '' %>>
-                                    <%= dish.name %>
-                                </option>
-                            <% }) %>
-                        </select>
+                    </div>
+                    <div class="display-row">
+                        <label for "timeOfDay">Time</label>
+                            <select name="timeOfDay" id="timeOfDay">
+                                <% ['Breakfast', 'Morning Snack', 'Lunch', 'Afternoon Snack', 'Dinner', 'Late Snack'].forEach(t => { %>
+                                    <option value="<%= t %>" <%= meal.timeOfDay === t ? 'selected' : '' %>>
+                                        <%= t %>
+                                    </option>
+                                <% }) %>
+                            </select>
+                    </div>
+                    <div class="display-row">
+                        <label for "dish">Dish</label>
+                            <select name="dish" id="dish">
+                                <% dishes.forEach(dish => { %>
+                                    <option value="<%= dish._id %>" <%= meal.dish._id.equals(dish._id) ? 'selected' : '' %>>
+                                        <%= dish.name %>
+                                    </option>
+                                <% }) %>
+                            </select>
+                    </div>
+                    <div class="display-row">
+                        <label for "owner">Owner</label>
+                        <input disabled value="<%= meal.owner.username %>">
+                    </div>
                 </fieldset>
             </form>
-            <label for "owner">Owner</label>
-                <p id="owner"><%= meal.owner.username %></p>
+            
         </div>
     <div class="actions">
         <% if (meal.owner.equals(user._id)) { %>
