@@ -18,7 +18,6 @@ header hr {
     height: 1px;
     background-color: var(--color-on-primary);
     width: 60%;
-
 }
 
 header nav {
@@ -31,7 +30,6 @@ header nav {
 header nav ul {
     display: flex;
     flex-direction: row;
-
     padding: 0.25rem;
     margin: 0.25rem;
     justify-content: center;
@@ -55,9 +53,9 @@ header nav li.active {
     border-color: var(--color-primary);
 }
 
-header nav .disabled {
+header nav li.disabled {
     color: var(--color-text-secondary);
     pointer-events: none;
     cursor: none;
-    border: none;
+    border-color: transparent;
 }

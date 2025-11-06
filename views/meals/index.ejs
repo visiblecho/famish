@@ -1,15 +1,30 @@
 <%- include('../partials/_header.ejs') %>
 
-<ul>
-    <% meals.forEach(meal => { %>
-        <li>
-            <a href="/meals/<%= meal._id %>/edit">
-                <%= meal.dish.name %> on <%= meal.date.toDateString() %>
-            </a>
-        </li>
-    <% }) %>
-</ul>
-
-<a href="/meals/new">Add</a>
+<main>
+    <div class="title"><h2>Your meal plan</h2></div>
+    <div class="overview">
+        <% meals.forEach(meal => { %>
+            <div class="display-row">
+                <div class="react">
+                    <button class="button small disabled" id="join-<%=meal._id %>">Join</button>
+                </div>
+                <div class="item">
+                    <a href="/meals/<%= meal._id %>/edit">
+                        <p><strong><%= meal.dish.name %></strong></p>
+                        <p>
+                            <%= meal.owner.username %>,
+                            <%= meal.timeOfDay %>, 
+                            <%= meal.date.toDateString() %></p>
+                    </a>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+    <div class="actions">
+        <a href="/meals/new" class="button primary">Add Meal</a>
+        <a href="/meals/new" class="button disabled">Print Meal Plan</a>
+        <a href="/meals/new" class="button disabled">Print Plan's Ingredients</a>
+    </div>
+</main>
 
 <%- include('../partials/_footer.ejs') %>

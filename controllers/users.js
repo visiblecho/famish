@@ -13,7 +13,6 @@ const router = express.Router()
 router.get('/sign-up', isSignedOut, (req, res) => res.render('users/sign-up'))
 
 // * POST /users/sign-up
-// This route expects a req.body in order to create a user in the database
 router.post('/sign-up', isSignedOut, async (req, res) => {
   try {
     const username = req.body.username
@@ -103,7 +102,6 @@ router.post('/sign-up', isSignedOut, async (req, res) => {
 router.get('/sign-in', isSignedOut, (req, res) => res.render('users/sign-in'))
 
 // * POST /users/sign-in
-// This route expects a req.body in order to search for a matching user
 router.post('/sign-in', isSignedOut, async (req, res) => {
   try {
     const existingUser = await User.findOne({
@@ -160,7 +158,7 @@ router.get('/:id', isSignedIn, async (req, res) => {
     const familyMembers = await User.find({
       family: req.session.user.family,
     })
-    const memberNames = familyMembers.map((m) => m.username)
+    const memberNames = familyMembers.map((m) => m.username).join(', ')
     res.render('users/manage', { memberNames })
   } catch (error) {
     console.error(error)

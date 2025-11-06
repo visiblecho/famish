@@ -1,15 +1,25 @@
 <%- include('../partials/_header.ejs') %>
 
-<ul>
-    <% dishes.forEach(dish => { %>
-        <li>
-            <a href="/dishes/<%= dish._id %>/edit">
-                <%= dish.name %> by <%= dish.owner.username %>
-            </a>
-        </li>
-    <% }) %>
-</ul>
-
-<a href="/dishes/new">Add</a>
+<main>
+    <div class="title"><h2>Your Favourite Dishes</h2></div>
+    <div class="overview">
+        <% dishes.forEach(dish => { %>
+            <div class="display-row">
+                <div class="react">
+                    <button class="button small disabled" id="like-<%=dish._id %>">Like</button>
+                </div>
+                <div class="item">
+                    <a href="/dishes/<%= dish._id %>/edit">
+                        <p><strong><%= dish.name %></strong> (<%= dish.owner.username %>)</p>
+                        <p><%= dish.ingredients %></p>
+                    </a>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+    <div class="actions">
+        <a href="/dishes/new" class="button primary">Add dish</a>
+    </div>
+</main>
 
 <%- include('../partials/_footer.ejs') %>

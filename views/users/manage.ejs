@@ -1,30 +1,49 @@
 <%- include('../partials/_header.ejs') %>
 
 <main>
-    <form id="manage-user" action="/users/<%= user._id %>?_method=PUT" method="post">
-        <label for "familyname">Family Name</label><input name="familyname" id="familyname" type="familyname" value="<%= user.familyname %>">        
-        <label for "username">Username</label><input name="username" id="username" type="text" value="<%= user.username %>">
-        <label for "password">Password</label><input name="password" id="password" type="password" placeholder="Leave blank to keep current password">
-        <label for "email">Email</label><input name="email" id="email" type="email" value="<%= user.email %>">        
-    </form>
+    <div class="title"><h2>Manage the Family</h2></div>
+    <div class="datalist">
+        <form id="manage-user" action="/users/<%= user._id %>?_method=PUT" method="post">
+            <div class="display-row">
+                <label for "username">Username</label>
+                <input name="username" id="username" type="text" value="<%= user.username %>">
+            </div>
+            <div class="display-row">
+                <label for "password">Password</label>
+                <input name="password" id="password" type="password" placeholder="Leave blank to keep current password">
+            </div>
+            <div class="display-row">
+                <label for "email">Email</label>
+                <input name="email" id="email" type="email" value="<%= user.email %>">        
+            </div>
+            <div class="display-row">
+                <label for "familyname">Family</label>
+                <input name="familyname" id="familyname" type="familyname" value="<%= user.familyname %>">        
+            </div>
+            <div class="display-row">
+                <label for "familymembers">Members</label>
+                <input disabled id="familymembers" value="<%= memberNames %>">
+            </div>
+        </form>
+        <div class="display-row">
+            <label for "familycode">Code</label>
+            <input disabled id="familycode" value="<%= user.familycode %>">
+            <button id="copy-to-clipboard-button" class="button small">Copy</button>
+        </div>
+    </div>
 
-    <label for "familymembers">Family Members</label><ul>
-        <% memberNames.forEach(member => { %>
-            <li><%= member %></li>
-        <% }) %>
-    </ul>
-
-    <label for "familycode">Family Code (share to invite members)</label><p id="familycode"><%= user.familycode %></p>
-    <button id="copy-to-clipboard-button" class="button">Copy Code to Clipboard</button>
-
-    <button form="manage-user" type="submit" class="button primary">Save changes</button>
-    <a class="button" href="/users/sign-out">Sign-out</a>
-    <a class="button" href="/">Delete user</a>
+    <div class="actions">
+        <button form="manage-user" type="submit" class="button primary disabled">Save changes</button>
+        <a class="button" href="/users/sign-out">Sign-out</a>
+        <a class="button disabled" href="/">Delete user</a>
+    </div>
 </main>
+
 <script>
     document.getElementById('copy-to-clipboard-button').addEventListener('click', async () => {
-        const code = document.getElementById('familycode').innerText
         try {
+            const code = document.getElementById('familycode').value
+            console.log(code)
             await navigator.clipboard.writeText(code)
         } catch (err) {
             console.error('Failed to copy to clipboard', err)
