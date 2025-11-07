@@ -85,6 +85,16 @@ main .overview .item a {
     color: inherit;
 }
 
+main .subheader {
+    font-family: var(--font-header);
+    font-size: larger;
+    margin-top: 2rem;
+}
+
+main hr {
+    width: 50%
+}
+
 /* homepage */
 
 main ul {

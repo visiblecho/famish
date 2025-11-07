@@ -3,21 +3,25 @@
 <main>
     <div class="title"><h2>Your meal plan</h2></div>
     <div class="overview">
-        <% meals.forEach(meal => { %>
-            <div class="display-row">
-                <div class="react">
-                    <button class="button small disabled" id="join-<%=meal._id %>">Join</button>
-                </div>
-                <div class="item">
-                    <a href="/meals/<%= meal._id %>/edit">
-                        <p><strong><%= meal.dish.name %></strong></p>
-                        <p>
-                            <%= meal.owner.username %>,
-                            <%= meal.timeOfDay %>, 
-                            <%= meal.date.toDateString() %></p>
-                    </a>
-                </div>
+        <% meals.forEach(day => { %>
+            <div class="subheader">
+                <h3><%= day.date.toDateString() %></h3>
+                <hr>
             </div>
+            <% day.slots.forEach(slot => { %>
+                <% slot.docs.forEach(meal => { %>
+                    <div class="display-row">
+                        <div class="react">
+                            <button class="button small disabled" id="join-<%=meal._id %>">Join</button>
+                        </div>
+                        <div class="item">
+                            <a href="/meals/<%= meal._id %>/edit">
+                                <p><%= meal.timeOfDay %> (<%= meal.owner.username %>): <strong><%= meal.dish.name %></strong></p>
+                            </a>
+                        </div>
+                    </div>
+                <% }) %>
+             <% }) %>
         <% }) %>
     </div>
     <div class="actions">
