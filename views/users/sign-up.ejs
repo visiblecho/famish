@@ -1,17 +1,33 @@
 <%- include('../partials/_header.ejs') %>
 
 <main>
-    <form id="sign-up" action="/users/sign-up" method="post">
-        <label for "username">Name</label><input name="username" id="username" type="text" required>
-        <label for "password">Password</label><input name="password" id="password" type="password" required>
-        <label for "email">Email</label><input name="email" id="email" type="email" required>
-        <!-- Family code is not implemented yet -->
-        <label for "familycode">Family Code</label><input name="familycode" id="familycode" type="text">
-        <button type="submit" class="button primary">Sign-up</button>
-    </form>
+    <div class="title"><h2>Join or start a family</h2></div>
+    <div class="datalist">
+        <form id="sign-up" action="/users/sign-up" method="post">
+            <div class="display-row">
+                <label for "username">Name</label>
+                <input name="username" id="username" type="text" required>
+            </div>
+            <div class="display-row">
+                <label for "password">Password</label>
+                <input name="password" id="password" type="password" required>
+            </div>
+            <div class="display-row">
+                <label for "email">Email</label>
+                <input name="email" id="email" type="email" required>
+            </div>
+            <div class="display-row">
+                <label for "familycode">Family Code</label>
+                <input name="familycode" id="familycode" type="text">
+            </div>
+            
+        </form>
+    </div>
 
-    <a class="button" href="/users/sign-in">Sign-in</a>
-    <a class="button" href="/">Home</a>
+    <div class="actions">
+        <button type="submit" form="sign-up" class="button primary">Sign-up</button>
+        <a class="button" href="/users/sign-in">Sign-in</a>
+    </div>
 </main>
 
 <%- include('../partials/_footer.ejs') %>
