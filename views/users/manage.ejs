@@ -3,9 +3,9 @@
 <main>
     <div class="title"><h2>Manage the Family</h2></div>
     <div class="datalist">
-        <form id="manage-user" action="/users/<%= user._id %>?_method=PUT" method="post">
+        <form id="manageuser" action="/users/<%= user._id %>?_method=PUT" method="post">
             <div class="display-row">
-                <label for "username">Username</label>
+                <label for "username">Name</label>
                 <input name="username" id="username" type="text" value="<%= user.username %>">
             </div>
             <div class="display-row">
@@ -33,13 +33,14 @@
     </div>
 
     <div class="actions">
-        <button form="manage-user" type="submit" class="button primary disabled">Confirm changes</button>
+        <button id="updateButton" form="manageuser" type="submit" class="button primary">Confirm changes</button>
         <a class="button" href="/users/sign-out">Sign-out</a>
         <a class="button disabled" href="/">Remove user</a>
     </div>
 </main>
 
 <script>
+    // Copy family code to clipboard
     document.getElementById('copy-to-clipboard-button').addEventListener('click', async () => {
         try {
             const code = document.getElementById('familycode').value
@@ -49,6 +50,22 @@
             console.error('Failed to copy to clipboard', err)
         }
     });
+</script>
+
+<script>
+    // Require repeat click on Delete to confirm
+    const manageForm = document.getElementById('manageuser')
+    const updateButton = document.getElementById('updateButton')
+    let confirmed
+
+    manageForm.addEventListener('submit', (event) => {
+        if (!confirmed) {
+            event.preventDefault();
+            updateButton.innerText = 'Heads up! Sure?';
+            updateButton.classList.add('confirmation');
+            confirmed = true;
+        }
+    })
 </script>
 
 <%- include('../partials/_footer.ejs') %>

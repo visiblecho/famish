@@ -67,7 +67,7 @@ router.post('/sign-up', isSignedOut, async (req, res) => {
       // Schedule success message
       req.session.message = {
         class: 'success',
-        text: `New user joined family`,
+        text: `Joined family as new user`,
       }
     }
 
@@ -165,6 +165,75 @@ router.get('/:id', isSignedIn, async (req, res) => {
     req.session.message = {
       class: 'warning',
       text: `Error showing user data:<br>${error.message}`,
+    }
+    res.redirect('/')
+  }
+})
+
+// * PUT  /users/:id -- update
+router.put('/:id', isSignedIn, async (req, res) => {
+  try {
+    const updates = {}
+
+    const newUsername = req.body.username
+    if (newUsername !== req.session.user.username) {
+      const usernameInDatabase = await User.findOne({ username: newUsername })
+      if (usernameInDatabase) {
+        req.session.message = {
+          class: 'warning',
+          text: `Username already taken`,
+        }
+        return res.redirect(`/users/${req.params.id}`)
+      }
+      updates.username = newUsername
+    }
+
+    const newEmail = req.body.email
+    if (newEmail !== req.session.user.email) {
+      const emailInDatabase = await User.findOne({ email: newEmail })
+      if (emailInDatabase) {
+        req.session.message = {
+          class: 'warning',
+          text: `Email already registered`,
+        }
+        return res.redirect(`/users/${req.params.id}`)
+      }
+      updates.email = newEmail
+    }
+
+    const newPassword = req.body.password
+    if (newPassword) {
+      const hashedPassword = bcrypt.hashSync(newPassword, 12)
+      updates.password = hashedPassword
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(req.params.id, updates)
+
+    const newFamilyname = req.body.familyname
+    if (newFamilyname !== req.session.user.familyname) {
+      const familyId = updatedUser.family
+      await Family.findByIdAndUpdate(familyId, { familyname: newFamilyname })
+    }
+
+    // Update the session
+    req.session.user.username = newUsername
+    req.session.user.email = newEmail
+    req.session.user.familyname = newFamilyname
+
+    // Schedule success message and redirect
+    req.session.save(() => {
+      console.log(req.session.user)
+      req.session.message = {
+        class: 'success',
+        text: `User and family updated`,
+      }
+      res.redirect('/')
+    })
+  } catch (error) {
+    console.error(error)
+    req.session.message = {
+      class: 'warning',
+      text: `Error updating user data:<br>${error.message}`,
     }
     res.redirect('/')
   }
