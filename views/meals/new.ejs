@@ -1,11 +1,16 @@
 <%- include('../partials/_header.ejs') %>
 
 <main>
-    <div class="title"></div>
-        <div class="datalist">
-            <form id="newMealForm" action="/meals/" method="post">
-                <label for "date">Date</label><input name="date" id="date" type="date">
-                <label for "timeOfDay">Time</label><select name="timeOfDay" id="timeOfDay">
+    <div class="title"><h2>Add a meal</h2></div>
+    <div class="datalist">
+        <form id="newMealForm" action="/meals/" method="post">
+            <div class="display-row">
+                <label for "date">Date</label>
+                <input name="date" id="date" type="date">
+            </div>
+            <div class="display-row">
+                <label for "timeOfDay">Time</label>
+                <select name="timeOfDay" id="timeOfDay">
                     <option value="Breakfast">Breakfast</option>
                     <option value="Morning Snack">Morning Snack</option>
                     <option value="Lunch">Lunch</option>
@@ -13,13 +18,17 @@
                     <option value="Dinner">Dinner</option>
                     <option value="Late Snack">Late Snack</option>
                 </select>
-                <label for "dish">Dish</label><select name="dish" id="dish">
+            </div>
+            <div class="display-row">
+                <label for "dish">Dish</label>
+                <select name="dish" id="dish">
                     <% dishes.forEach(dish => { %>
                         <option value="<%= dish._id %>"><%= dish.name %></option>
                     <% }) %>
                 </select>
-            </form>
-        </div>
+            </div>
+        </form>
+    </div>
     <div class="actions">
         <button class="button primary" type="submit" form="newMealForm">Save meal</button>
         <a href="/meals" class="button">Discard changes</a>
