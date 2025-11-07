@@ -32,15 +32,29 @@
     </div>
     <div class="actions">
         <% if (dish.owner.equals(user._id)) { %>
-            <button class="button primary" type="submit" form="manageDishForm">Save changes</button>
-            <form action="/dishes/<%= dish._id %>?_method=DELETE" method="POST">
-                <button type="submit" class="button">Delete dish</button>
+            <button class="button primary" type="submit" form="manageDishForm">Confirm changes</button>
+            <form id="deleteDishForm" action="/dishes/<%= dish._id %>?_method=DELETE" method="POST">
+                <button id="deleteDishButton" type="submit" class="button">Remove dish</button>
             </form>
         <% } %>
         <a href="/dishes" class="button">Return to overview</a>
     </div>
 </main>
 
+<script>
+    // Require repeat click on Delete to confirm
+    const deleteForm = document.getElementById('deleteDishForm')
+    const deleteButton = document.getElementById('deleteDishButton')
+    let confirmed
 
+    deleteForm.addEventListener('submit', (event) => {
+        if (!confirmed) {
+            event.preventDefault();
+            deleteButton.innerText = 'Confirm removal';
+            deleteButton.classList.add('confirmation');
+            confirmed = true;
+        }
+    })
+</script>
 
 <%- include('../partials/_footer.ejs') %>

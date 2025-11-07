@@ -85,6 +85,22 @@ main .overview .item a {
     color: inherit;
 }
 
+/* homepage */
+
+main ul {
+    display: flex;
+    flex-direction: column;
+    padding: 0.25rem;
+    margin: 0.25rem;
+    justify-content: center;
+}
+
+main li {
+    list-style-type: none;
+
+    margin: .25rem;
+}
+
 /* Buttons and Links */
 
 main .actions {
@@ -123,4 +139,9 @@ main .disabled {
     pointer-events: none;
     cursor: none;
     border: none;
+}
+
+main .confirmation {
+    background-color: var(--color-warning);
+    color: var(--color-on-warning);
 }

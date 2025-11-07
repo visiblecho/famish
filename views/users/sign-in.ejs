@@ -1,14 +1,23 @@
 <%- include('../partials/_header.ejs') %>
 
 <main>
-    <form id="sign-in" action="/users/sign-in" method="post">
-        <label for "username">Name</label><input name="username" id="username" type="text">
-        <label for "password">Password</label><input name="password" id="password" type="password">
-        <button type="submit" class="button primary">Sign-in</button>
-    </form>
-
-    <a class="button" href="/users/sign-up">Sign-up</a>
-    <a class="button" href="/">Home</a>
+    <div class="title"><h2>Enter the living room</h2></div>
+    <div class="datalist">
+        <form id="sign-in" action="/users/sign-in" method="post">
+            <div class="display-row">
+                <label for "username">Name</label>
+                <input name="username" id="username" type="text">
+            </div>
+            <div class="display-row">
+                <label for "password">Password</label>
+                <input name="password" id="password" type="password">
+            </div>
+        </form>
+    </div>
+    <div class="actions">
+        <button type="submit" form="sign-in" class="button primary">Sign-in</button>
+        <a class="button" href="/users/sign-up">Sign-up</a>
+    </div>
 </main>
 
 <%- include('../partials/_footer.ejs') %>

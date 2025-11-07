@@ -1,17 +1,29 @@
 <%- include('partials/_header.ejs') %>
 
-<% if (!user) { %>
-    <a class="button primary" href="/users/sign-up">Sign-up</a>
-    <a class="button" href="/users/sign-in">Sign-in</a>
-<% } %>
-
-<ul>
-    <li>Join or start a family</li>
-    <li>Add your favorite dishes</li>
-    <li>Plan the week's meals</li>
-    <li>Share the plan</li>
-    <li>Get feedback from family members</li>
-    <li>Use your plan to get all ingredients</li>
-</ul>
+<main>
+    <div class="title"><h2>Enter the living room</h2></div>
+    <% if (!user) { %>
+        <div class="datalist">   
+            <ul>
+                <li>Join or start a family</li>
+                <li>Add your favorite dishes</li>
+                <li>Plan the week's meals</li>
+                <li>Share the plan</li>
+                <li>Get feedback from family members</li>
+                <li>Use your plan to get all ingredients</li>
+            </ul>
+        </div>
+    <% } %>
+    <div class="actions">
+        <% if (!user) { %>
+            <a class="button primary" href="/users/sign-up">Sign-up</a>
+            <a class="button" href="/users/sign-in">Sign-in</a>
+        <% } else { %>
+                <a class="button primary" href="/dishes/new">Add your favorite dishes</a>
+                <a class="button" href="/meals">Plan the week</a>
+                <a class="button" href="/users/manage">Manage the family</a>
+            </ul>
+        <% }%>
+    </div>
 
 <%- include('partials/_footer.ejs') %>

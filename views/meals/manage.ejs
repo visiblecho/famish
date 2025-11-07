@@ -39,9 +39,9 @@
         </div>
     <div class="actions">
         <% if (meal.owner.equals(user._id)) { %>
-            <button class="button primary" type="submit" form="manageMealForm">Save changes</button>
-            <form action="/meals/<%= meal._id %>?_method=DELETE" method="POST">
-                <button type="submit" class="button">Delete meal</button>
+            <button class="button primary" type="submit" form="manageMealForm">Confirm changes</button>
+            <form id="deleteMealForm" action="/meals/<%= meal._id %>?_method=DELETE" method="POST">
+                <button id="deleteMealButton" type="submit" class="button">Remove meal</button>
             </form>
         <% } %>
         <a href="/meals" class="button">Return to overview</a>
@@ -50,16 +50,29 @@
 
 <script>
   // Limit date entry to the next seven days only
-  const dateInput = document.getElementById('date');
-  const today = new Date();
-  const nextWeek = new Date();
-  nextWeek.setDate(today.getDate() + 7);
+  const dateInput = document.getElementById('date')
+  const today = new Date()
+  const nextWeek = new Date()
+  nextWeek.setDate(today.getDate() + 7)
+  const toISO = (d) => d.toISOString().split('T')[0]
+  dateInput.min = toISO(today)
+  dateInput.max = toISO(nextWeek)
+</script>
 
-  // Format as YYYY-MM-DD for the input
-  const toISO = (d) => d.toISOString().split('T')[0];
+<script>
+    // Require repeat click on Delete to confirm
+    const deleteForm = document.getElementById('deleteMealForm')
+    const deleteButton = document.getElementById('deleteMealButton')
+    let confirmed
 
-  dateInput.min = toISO(today);
-  dateInput.max = toISO(nextWeek);
+    deleteForm.addEventListener('submit', (event) => {
+        if (!confirmed) {
+            event.preventDefault();
+            deleteButton.innerText = 'Confirm removal';
+            deleteButton.classList.add('confirmation');
+            confirmed = true;
+        }
+    })
 </script>
 
 <%- include('../partials/_footer.ejs') %>
