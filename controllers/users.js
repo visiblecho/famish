@@ -73,7 +73,6 @@ router.post('/sign-up', isSignedOut, async (req, res) => {
 
     // Create user in the database.
     const createdUser = await User.create(req.body)
-    console.log(createdUser)
 
     // Update the session with user information (to signal of signed-in status).
     req.session.user = {
@@ -222,7 +221,6 @@ router.put('/:id', isSignedIn, async (req, res) => {
 
     // Schedule success message and redirect
     req.session.save(() => {
-      console.log(req.session.user)
       req.session.message = {
         class: 'success',
         text: `User and family updated`,

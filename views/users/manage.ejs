@@ -44,7 +44,6 @@
     document.getElementById('copy-to-clipboard-button').addEventListener('click', async () => {
         try {
             const code = document.getElementById('familycode').value
-            console.log(code)
             await navigator.clipboard.writeText(code)
         } catch (err) {
             console.error('Failed to copy to clipboard', err)
